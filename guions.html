@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generador de Guions Polítics · Crisol.cc</title>
+  <meta name="description" content="Eina professional per crear guions de vídeo polític per a Instagram Reels i TikTok, amb recomanacions de gravació per maximitzar l'impacte." />
+  <style>
+    :root {
+      --bg: #f7f5f0;
+      --text: #111111;
+      --muted: #666666;
+      --line: #d9d4ca;
+      --script-bg: #111111;
+      --script-text: #f0ede8;
+      --col-hook: #e05252;
+      --col-cos: #4a90d9;
+      --col-cta: #3daa7c;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .wrap {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Header ── */
+    header {
+      border-bottom: 1px solid var(--line);
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      background: var(--bg);
+      z-index: 10;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .header-left { display: flex; align-items: center; gap: 14px; }
+
+    .brand { font-weight: 650; font-size: 18px; letter-spacing: -0.03em; }
+
+    .brand:hover { opacity: 0.7; }
+
+    .hdivider { width: 1px; height: 18px; background: var(--line); }
+
+    .app-label { font-size: 13px; color: var(--muted); }
+
+    .back-link {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.15s;
+    }
+
+    .back-link:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .tool-hero {
+      padding: 40px 0 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .tool-hero h1 {
+      font-size: clamp(30px, 5vw, 56px);
+      letter-spacing: -0.04em;
+      font-weight: 650;
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+
+    .tool-hero p {
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.65;
+      max-width: 620px;
+    }
+
+    /* ── Layout ── */
+    .tool-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 0;
+      min-height: calc(100vh - 180px);
+    }
+
+    /* ── Form panel ── */
+    .form-panel {
+      border-right: 1px solid var(--line);
+      padding: 28px 28px 40px 0;
+    }
+
+    .form-block { margin-bottom: 24px; }
+
+    .block-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 5px;
+      margin-top: 12px;
+    }
+
+    label:first-of-type { margin-top: 0; }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      font: inherit;
+      font-size: 14px;
+      background: #fff;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+    }
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus { border-color: var(--text); }
+
+    input.error { border-color: #e05252 !important; }
+
+    textarea { resize: vertical; min-height: 68px; line-height: 1.55; }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 30px;
+    }
+
+    /* Pill radios */
+    .pills { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .pills input[type="radio"] { display: none; }
+
+    .pills label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 13px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--muted);
+      cursor: pointer;
+      margin: 0;
+      transition: all 0.15s;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    .pills label:hover { border-color: var(--text); color: var(--text); }
+
+    .pills input[type="radio"]:checked + label {
+      background: var(--text);
+      color: #fff;
+      border-color: var(--text);
+    }
+
+    .pill-ig input[type="radio"]:checked + label { background: #d62976; border-color: #d62976; }
+    .pill-tt input[type="radio"]:checked + label { background: #111; border-color: #111; }
+
+    /* Generate button */
+    .btn-generate {
+      width: 100%;
+      padding: 13px 20px;
+      background: var(--text);
+      color: var(--bg);
+      border: none;
+      border-radius: 999px;
+      font: inherit;
+      font-size: 15px;
+      font-weight: 550;
+      cursor: pointer;
+      letter-spacing: -0.01em;
+      transition: opacity 0.15s;
+      margin-top: 4px;
+    }
+
+    .btn-generate:hover { opacity: 0.82; }
+    .btn-generate:active { opacity: 0.65; }
+
+    /* ── Output panel ── */
+    .output-panel { padding: 28px 0 40px 32px; }
+
+    /* Empty state */
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 480px;
+      color: var(--muted);
+      text-align: center;
+      gap: 14px;
+    }
+
+    .empty-state svg { opacity: 0.18; }
+
+    .empty-state p { font-size: 15px; max-width: 280px; line-height: 1.6; }
+
+    /* Script output */
+    .script-output { display: none; }
+    .script-output.visible { display: block; }
+
+    /* Output top bar */
+    .output-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .output-meta { font-size: 13px; color: var(--muted); margin-right: auto; }
+
+    .btn-icon {
+      padding: 7px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font: inherit;
+      font-size: 12px;
+      cursor: pointer;
+      background: #fff;
+      color: var(--text);
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .btn-icon:hover { background: var(--text); color: #fff; border-color: var(--text); }
+
+    /* Script card - dark */
+    .script-card {
+      background: var(--script-bg);
+      border-radius: 16px;
+      padding: 28px 28px 24px;
+      margin-bottom: 24px;
+      color: var(--script-text);
+    }
+
+    .script-meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 18px;
+      margin-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .platform-badges { display: flex; align-items: center; gap: 8px; }
+
+    .plat-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .plat-dot.ig { background: #d62976; }
+    .plat-dot.tt { background: #fff; }
+
+    .plat-label { font-size: 13px; color: rgba(255,255,255,0.5); }
+
+    .duration-badge { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+    /* Segments */
+    .segment { margin-bottom: 0; }
+
+    .seg-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      margin: 18px 0;
+    }
+
+    .seg-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .seg-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .seg-tag.hook { background: rgba(224,82,82,0.18); color: var(--col-hook); }
+    .seg-tag.cos  { background: rgba(74,144,217,0.18); color: var(--col-cos); }
+    .seg-tag.cta  { background: rgba(61,170,124,0.18); color: var(--col-cta); }
+
+    .seg-time { font-size: 11px; color: rgba(255,255,255,0.28); }
+
+    .seg-text {
+      font-size: 19px;
+      line-height: 1.55;
+      color: var(--script-text);
+      letter-spacing: -0.015em;
+    }
+
+    .seg-note {
+      margin-top: 9px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      line-height: 1.55;
+      font-style: italic;
+    }
+
+    /* Visual overlays box */
+    .visual-box {
+      background: rgba(255,255,255,0.04);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 18px;
+    }
+
+    .visual-box-title {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.28);
+      margin-bottom: 10px;
+    }
+
+    .visual-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 7px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.45;
+    }
+
+    .visual-item:last-child { margin-bottom: 0; }
+
+    .visual-ts { color: rgba(255,255,255,0.2); flex-shrink: 0; padding-top: 1px; }
+
+    /* ── Recommendations ── */
+    .rec-section { margin-top: 0; }
+
+    .rec-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 16px;
+      background: var(--line);
+      padding: 3px;
+      border-radius: 10px;
+      width: fit-content;
+    }
+
+    .tab-btn {
+      padding: 6px 14px;
+      border: none;
+      background: transparent;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      border-radius: 8px;
+      color: var(--muted);
+      transition: all 0.15s;
+    }
+
+    .tab-btn.active { background: #fff; color: var(--text); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .rec-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .rec-card {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 16px 18px;
+      background: #fff;
+    }
+
+    .rec-icon { font-size: 18px; margin-bottom: 8px; display: block; }
+
+    .rec-card-title { font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+
+    .rec-list { list-style: none; padding: 0; }
+
+    .rec-list li {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.55;
+      padding: 3.5px 0;
+      display: flex;
+      gap: 7px;
+      align-items: flex-start;
+    }
+
+    .rec-list li::before {
+      content: '—';
+      flex-shrink: 0;
+      color: var(--line);
+      font-size: 11px;
+      padding-top: 2px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 960px) {
+      .tool-layout { grid-template-columns: 1fr; }
+      .form-panel { border-right: none; border-bottom: 1px solid var(--line); padding: 24px 0; }
+      .output-panel { padding: 24px 0; }
+    }
+
+    @media (max-width: 600px) {
+      .rec-grid { grid-template-columns: 1fr; }
+      .script-card { padding: 20px 18px; }
+      .seg-text { font-size: 16px; }
+    }
+
+    /* ── Print ── */
+    @media print {
+      header, .tool-hero p, .form-panel, .output-bar, .tabs, .rec-section { display: none !important; }
+      .tool-layout { grid-template-columns: 1fr; }
+      .output-panel { padding: 0; }
+      .script-card { border: 1px solid #ccc; background: #fff; color: #111; border-radius: 8px; }
+      .seg-text { color: #111; }
+      .seg-note { color: #666; }
+      .seg-time { color: #888; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="header-inner">
+        <div class="header-left">
+          <a href="/" class="brand">Jordi Crisol</a>
+          <div class="hdivider"></div>
+          <span class="app-label">Guions de vídeo polític</span>
+        </div>
+        <a href="/" class="back-link">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Tornar
+        </a>
+      </div>
+    </header>
+
+    <div class="tool-hero">
+      <div class="eyebrow">Estratègia · Comunicació Digital · Xarxes Socials</div>
+      <h1>Guions de vídeo polític</h1>
+      <p>Crea guions optimitzats per a Instagram Reels i TikTok. Estructura d'alt impacte, recomanacions professionals de gravació i consells per maximitzar la viralitat.</p>
+    </div>
+
+    <div class="tool-layout">
+
+      <!-- ── FORMULARI ── -->
+      <aside class="form-panel">
+
+        <!-- Plataforma -->
+        <div class="form-block">
+          <div class="block-title">Plataforma</div>
+          <div class="pills">
+            <div class="pill-ig">
+              <input type="radio" name="plataforma" id="p-ig" value="ig" checked>
+              <label for="p-ig">📸 Instagram</label>
+            </div>
+            <div class="pill-tt">
+              <input type="radio" name="plataforma" id="p-tt" value="tt">
+              <label for="p-tt">🎵 TikTok</label>
+            </div>
+            <div>
+              <input type="radio" name="plataforma" id="p-both" value="both">
+              <label for="p-both">Ambdues</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Durada -->
+        <div class="form-block">
+          <div class="block-title">Durada</div>
+          <div class="pills">
+            <div>
+              <input type="radio" name="durada" id="d-15" value="15" checked>
+              <label for="d-15">15 seg</label>
+            </div>
+            <div>
+              <input type="radio" name="durada" id="d-30" value="30">
+              <label for="d-30">30 seg</label>
+            </div>
+            <div>
+              <input type="radio" name="durada" id="d-60" value="60">
+              <label for="d-60">60 seg</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contingut -->
+        <div class="form-block">
+          <div class="block-title">Contingut del missatge</div>
+
+          <label for="tema">Tema del vídeo *</label>
+          <input type="text" id="tema" placeholder="p.e. habitatge, sanitat, educació, transport…">
+
+          <label for="missatge">Posició o idea principal *</label>
+          <textarea id="missatge" placeholder="Quina és la teva postura? Quin problema abordes?"></textarea>
+
+          <label for="proposta">Proposta concreta</label>
+          <textarea id="proposta" style="min-height: 56px;" placeholder="Quina acció o mesura específica proposes?"></textarea>
+
+          <label for="dada">Dada o xifra impactant <span style="color:var(--line)">(opcional)</span></label>
+          <input type="text" id="dada" placeholder="p.e. «El 40% dels joves no pot emancipar-se»">
+        </div>
+
+        <!-- Estil -->
+        <div class="form-block">
+          <div class="block-title">Estil</div>
+
+          <label for="hook-tipus">Tipus de hook (primers 3 seg)</label>
+          <select id="hook-tipus">
+            <option value="pregunta">Pregunta directa</option>
+            <option value="estadistica">Estadística o dada</option>
+            <option value="afirmacio">Afirmació disruptiva</option>
+            <option value="promesa">Promesa directa</option>
+          </select>
+
+          <label for="to">To del vídeo</label>
+          <select id="to">
+            <option value="proper">Proper i emocional</option>
+            <option value="informatiu">Informatiu i sòlid</option>
+            <option value="combatiu">Combatiu i directe</option>
+            <option value="inspirador">Inspirador i positiu</option>
+          </select>
+        </div>
+
+        <button class="btn-generate" onclick="generate()">Generar guió →</button>
+      </aside>
+
+      <!-- ── OUTPUT ── -->
+      <main class="output-panel">
+
+        <div class="empty-state" id="empty-state">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <path d="M8 21h8M12 17v4"/>
+            <path d="M9 9l2 2 4-4"/>
+          </svg>
+          <p>Omple el formulari i genera el guió del teu vídeo</p>
+        </div>
+
+        <div class="script-output" id="script-output"></div>
+
+      </main>
+    </div>
+  </div><!-- /wrap -->
+
+  <script>
+    function vals() {
+      return {
+        plataforma: document.querySelector('input[name="plataforma"]:checked').value,
+        durada: +document.querySelector('input[name="durada"]:checked').value,
+        tema: document.getElementById('tema').value.trim(),
+        missatge: document.getElementById('missatge').value.trim(),
+        proposta: document.getElementById('proposta').value.trim(),
+        dada: document.getElementById('dada').value.trim(),
+        hookTipus: document.getElementById('hook-tipus').value,
+        to: document.getElementById('to').value,
+      };
+    }
+
+    function hook(tipus, tema, dada, to) {
+      const t = tema || '[tema]';
+      const d = dada;
+      const map = {
+        pregunta: {
+          proper:     d ? `T'has preguntat mai per quina raó ${t}? ${d}. No és normal, i cal parlar-ne.`
+                        : `T'has preguntat mai per quina raó a ${t} seguim sense trobar solucions? Jo sí.`,
+          informatiu: d ? `Sobre ${t}: si ${d}, per què continuem sense actuar?`
+                        : `Quina és la veritat sobre ${t}? Les dades et sorprendran.`,
+          combatiu:   d ? `${d}. Fins quan ho tolerarem?`
+                        : `Seguim mirant cap a un altre costat amb ${t}?`,
+          inspirador: d ? `Imagina un país on ${t} ja no sigui un problema. ${d} ens diu que és urgent. Comencem.`
+                        : `Imagina que ${t} podria canviar per sempre. És possible. T'explico com.`,
+        },
+        estadistica: {
+          proper:     d ? `${d}. Quan llegeixo això penso en totes les famílies que ho pateixen cada dia.`
+                        : `[INSEREIX UNA XIFRA CONCRETA SOBRE ${t.toUpperCase()}]. Deixa que t'ho expliqui.`,
+          informatiu: d ? `Les dades sobre ${t} parlen soles: ${d}.`
+                        : `[XIFRA CONCRETA]. Aquesta és la realitat de ${t} avui.`,
+          combatiu:   d ? `${d}. I seguim sense actuar. Inacceptable.`
+                        : `[XIFRA CONCRETA SOBRE ${t.toUpperCase()}] — i ningú fa res.`,
+          inspirador: d ? `${d}. Per això treballem per canviar-ho. I podem.`
+                        : `La situació de ${t} pot millorar molt. I t'explico com.`,
+        },
+        afirmacio: {
+          proper:     `Vull ser completament honest amb tu sobre ${t}.`,
+          informatiu: `La realitat de ${t} és molt diferent del que ens expliquen.`,
+          combatiu:   `Ningú t'explicarà la veritat sobre ${t}. Però jo sí.`,
+          inspirador: `Tenim l'oportunitat de canviar ${t} d'una vegada per totes.`,
+        },
+        promesa: {
+          proper:     `Et faig una promesa sobre ${t}. Una que puc complir.`,
+          informatiu: `Et diré exactament el que faré sobre ${t}. Sense ambigüitats.`,
+          combatiu:   `Prou de promeses buides sobre ${t}. Aquí la meva proposta concreta.`,
+          inspirador: `Junts podem transformar ${t}. I comencem ara.`,
+        },
+      };
+      return map[tipus]?.[to] ?? map[tipus]?.informatiu ?? '';
+    }
+
+    function body(missatge, proposta, dada, hookTipus, to, durada) {
+      const intro = { proper: 'La veritat és que', informatiu: 'La realitat és que', combatiu: 'El problema real és que', inspirador: 'La bona notícia és que' };
+      const propIntro = { proper: 'El meu compromís és', informatiu: 'La proposta concreta:', combatiu: 'La solució és clara:', inspirador: 'La meva proposta per aconseguir-ho:' };
+      const parts = [];
+      if (missatge) parts.push(`${intro[to] || 'El cert és que'} ${missatge}.`);
+      if (dada && hookTipus !== 'estadistica' && durada >= 30) parts.push(`Les dades ho confirmen: ${dada}.`);
+      if (proposta) parts.push(`${propIntro[to] || 'La proposta:'} ${proposta}.`);
+      return parts;
+    }
+
+    function cta(plataforma, to) {
+      const map = {
+        ig: { proper: 'Si creus que és important, comparteix aquest vídeo. La teva difusió fa la diferència.', informatiu: 'Segueix-me per estar informat de la realitat, no dels relats.', combatiu: 'Comenta si estàs d\'acord. I comparteix perquè tothom ho sàpiga.', inspirador: 'Guarda aquest vídeo i explica\'l a algú que vulgui un canvi real.' },
+        tt:  { proper: 'Si t\'ha tocat, comenta i comparteix. Necessito saber la teva opinió.', informatiu: 'Segueix per estar informat. I digues als comentaris el que penses.', combatiu: 'Digues-m\'ho als comentaris. T\'importa o no?', inspirador: 'Duda-ho amb algú que cregui que podem fer-ho millor.' },
+        both:{ proper: 'Comenta el que penses i comparteix si creus que importa.', informatiu: 'Segueix per saber més. I comparteix amb qui vulgui entendre la realitat.', combatiu: 'Comenta i comparteix. La teva veu fa la diferència.', inspirador: 'Comparteix amb qui cregui que podem fer-ho millor. Junts.' },
+      };
+      return map[plataforma]?.[to] ?? 'Segueix-me i comparteix si creus que és important.';
+    }
+
+    function timeSegs(durada) {
+      if (durada === 15) return [
+        { label: 'hook', name: 'Hook',      ts: '0–3s' },
+        { label: 'cos',  name: 'Cos',       ts: '3–12s' },
+        { label: 'cta',  name: 'CTA',       ts: '12–15s' },
+      ];
+      if (durada === 30) return [
+        { label: 'hook', name: 'Hook',      ts: '0–3s' },
+        { label: 'cos',  name: 'Cos',       ts: '3–24s' },
+        { label: 'cta',  name: 'CTA',       ts: '24–30s' },
+      ];
+      return [
+        { label: 'hook', name: 'Hook',      ts: '0–4s' },
+        { label: 'cos',  name: 'Problema',  ts: '4–20s' },
+        { label: 'cos',  name: 'Proposta',  ts: '20–50s' },
+        { label: 'cta',  name: 'CTA',       ts: '50–60s' },
+      ];
+    }
+
+    function platName(p) {
+      return { ig: 'Instagram Reels', tt: 'TikTok', both: 'Instagram + TikTok' }[p];
+    }
+
+    function recs(plataforma) {
+      const universal = {
+        enquadrament: ['Pla mig curt: de pit o clavícula amunt', 'Càmera a l\'alçada dels ulls o lleugerament per sobre', 'Format vertical 9:16 (1080×1920 px), obligatori', 'Marge del 15% als costats (zona segura per als elements de la plataforma)', 'Mirada directa a la lent — no a la pantalla del dispositiu'],
+        llum: ['Llum natural: finestra gran al teu lateral, mai al darrere teu', 'Llum artificial: ring light frontal o panell LED lateral suau', 'Temperatura recomanada: 3.200–4.500K (to càlid i proper)', 'Evita contrastos durs i ombres pronunciades a la cara', 'Fes un vídeo de prova de 10 seg per verificar l\'exposició'],
+        so: ['Micròfon de solapa (lavalier) connectat directament al mòbil o la càmera', 'Alternativa: micròfon direccional de càmera o de mà', 'Espai silenciós: tanca finestres, apaga l\'aire condicionat i el frigorífic', 'Parla amb energia i claredat, sense cridar ni murmurar', 'Fes una pausa d\'1 segon al principi i al final de la gravació (marge d\'edició)'],
+        fons: ['Fons net i uniforme, o contextualment rellevant (carrer, escola, mercat)', 'Evita fons amb text llegible que pugui distreure o ser malinterpretat', 'Roba: colors sòlids que contrastin amb el fons; evita estampats petits o ratlles fines (efecte moiré)', 'Maquillatge lleuger mat si la pell brilla sota les llums'],
+        gravacio: ['Trípode o estabilitzador gimbal: zero tremolor', 'Mòbil modern o càmera mirrorless en mode vídeo 4K', 'Grava diverses preses del hook (els primers 3 seg): és el segment més decisiu', 'Filma un 25–30% més llarg del necessari per tenir marge d\'edició', 'Usa teleprompter (app de mòbil) si el text és llarg'],
+        postproduccio: ['Subtítols SEMPRE actius, font gran i llegible, alt contrast (blanc amb ombra o text negre)', 'Màxim 2 línies de subtítol simultànies, centrades a la meitat inferior de la pantalla', 'Textos superposats: frase clau del hook al principi, dades importants destacades en pantalla', 'Música de fons suau, a −20 dB respecte la veu; evita música polititzada o polèmica', 'Talls ràpids entre frases, elimina silencis llargs', 'Format final: MP4 H.264, 1080×1920, mínim 30fps'],
+      };
+      const specific = {
+        ig: ['Comparteix a Stories just en publicar el Reel per amplificar l\'abast inicial', 'Usa una portada (cover) clara i impactant: és el primer fotograma que veu l\'usuari', 'Activa els subtítols automàtics d\'Instagram i revisa\'ls abans de publicar', 'Primera línia del caption: captivadora i visible sense clicar "veure més"', 'Respon comentaris en les primeres 24h: l\'algoritme ho valora molt', 'Horari òptim: dimarts a dijous, 19:00–21:00 o 12:00–14:00'],
+        tt:  ['Puja en la màxima qualitat disponible (desactiva la reducció de dades del mòbil)', 'Usa 3–5 hashtags rellevants i específics; evita genèrics com #viral o #fyp', 'Posa la frase clau com a primer comentari teu just en publicar', 'Interactua activament durant la primera hora: respon comentaris ràpid', 'Analitza les estadístiques a les 48h: el temps de visualització és l\'indicador clau', 'Horari òptim: 19:00–22:00 o 12:00–14:00 (hora del teu públic)'],
+        both:['Puja com a nadiu a cada plataforma (no comparteixis el link d\'una plataforma a l\'altra)', 'Elimina el logotip de TikTok si reutilitzes el vídeo a Instagram', 'Adapta els hashtags: temàtics a Instagram, trending o de nínxol a TikTok', 'Publica primer a TikTok, després a Instagram', 'Monitoritza comentaris a ambdues plataformes durant les primeres 24h'],
+      };
+      return { universal, specific: specific[plataforma] ?? specific.both };
+    }
+
+    function renderOutput(v) {
+      const hookText = hook(v.hookTipus, v.tema, v.dada, v.to);
+      const bodyParts = body(v.missatge, v.proposta, v.dada, v.hookTipus, v.to, v.durada);
+      const ctaText = cta(v.plataforma, v.to);
+      const segs = timeSegs(v.durada);
+      const rec = recs(v.plataforma);
+      const pName = platName(v.plataforma);
+
+      // Assign script text per segment
+      const segTexts = [];
+      if (v.durada === 15) {
+        segTexts.push(hookText);
+        segTexts.push(bodyParts.join(' ') || '[MISSATGE PRINCIPAL EN 1–2 FRASES CURTES I DIRECTES]');
+        segTexts.push(ctaText);
+      } else if (v.durada === 30) {
+        segTexts.push(hookText);
+        segTexts.push(bodyParts.join(' ') || '[MISSATGE PRINCIPAL: PROBLEMA + PROPOSTA EN 3–4 FRASES]');
+        segTexts.push(ctaText);
+      } else {
+        segTexts.push(hookText);
+        segTexts.push(bodyParts[0] || '[PROBLEMA: Exposa la situació actual amb dades o evidència concreta. 2–3 frases.]');
+        segTexts.push(bodyParts.slice(1).join(' ') || '[PROPOSTA: Explica la teva solució de forma específica i comprensible. 3–5 frases.]');
+        segTexts.push(ctaText);
+      }
+
+      const segNotes = {
+        hook: 'Parla directament a càmera. Energia alta des del primer instant. Sense introducció — el primer segon és crític per a l\'algoritme.',
+        cos:  v.durada === 15 ? 'Màxim 2 frases, directes. No perdis temps en context, ve tot just del hook.' : 'Ritme constant, una idea per frase. Usa pauses curtes com a respiració natural entre arguments.',
+        Problema: 'Contextualitza el problema amb una dada o una situació concreta que l\'espectador pugui reconèixer.',
+        Proposta: 'Explica la solució de forma clara. Evita l\'argot polític. Parla com si ho expliquessis a un amic.',
+        cta: 'Una sola acció. Mantén el contacte visual fins a l\'últim segon. Parla directament a «tu».',
+      };
+
+      const platDots = {
+        ig:   '<span class="plat-dot ig"></span><span class="plat-label">Instagram Reels</span>',
+        tt:   '<span class="plat-dot tt"></span><span class="plat-label">TikTok</span>',
+        both: '<span class="plat-dot ig"></span><span class="plat-dot tt"></span><span class="plat-label">Instagram + TikTok</span>',
+      };
+
+      // Build script segments HTML
+      let segHTML = '';
+      segs.forEach((seg, i) => {
+        if (i > 0) segHTML += '<hr class="seg-divider">';
+        const noteKey = seg.name === 'Hook' ? 'hook' : seg.name === 'CTA' ? 'cta' : seg.name in segNotes ? seg.name : 'cos';
+        segHTML += `
+          <div class="segment">
+            <div class="seg-header">
+              <span class="seg-tag ${seg.label}">${seg.name}</span>
+              <span class="seg-time">${seg.ts}</span>
+            </div>
+            <div class="seg-text">${segTexts[i]}</div>
+            <div class="seg-note">${segNotes[noteKey]}</div>
+          </div>`;
+      });
+
+      // Visual overlays suggestions
+      let visuals = '';
+      if (v.dada) visuals += `<div class="visual-item"><span class="visual-ts">0s</span><span><strong style="color:rgba(255,255,255,0.7)">${v.dada}</strong> — text gran sobreposat a l'inici</span></div>`;
+      if (v.tema) visuals += `<div class="visual-item"><span class="visual-ts">2s</span><span>Títol breu: <strong style="color:rgba(255,255,255,0.7)">«${v.tema.charAt(0).toUpperCase() + v.tema.slice(1)}»</strong> en pantalla</span></div>`;
+      visuals += `<div class="visual-item"><span class="visual-ts">Final</span><span>Nom i càrrec + xarxes socials a la pantalla final</span></div>`;
+
+      // Rec cards
+      const rcards = [
+        ['🎥', 'Enquadrament', rec.universal.enquadrament],
+        ['💡', 'Il·luminació', rec.universal.llum],
+        ['🎙️', 'So i veu', rec.universal.so],
+        ['👔', 'Fons i vestuari', rec.universal.fons],
+        ['📱', 'Gravació tècnica', rec.universal.gravacio],
+        ['✂️', 'Post-producció', rec.universal.postproduccio],
+      ];
+
+      const recGridHTML = rcards.map(([icon, title, items]) => `
+        <div class="rec-card">
+          <span class="rec-icon">${icon}</span>
+          <div class="rec-card-title">${title}</div>
+          <ul class="rec-list">${items.map(r => `<li>${r}</li>`).join('')}</ul>
+        </div>`).join('');
+
+      const platRecHTML = `
+        <div class="rec-card" style="max-width:600px">
+          <span class="rec-icon">${v.plataforma === 'ig' ? '📸' : v.plataforma === 'tt' ? '🎵' : '📲'}</span>
+          <div class="rec-card-title">${pName}</div>
+          <ul class="rec-list">${rec.specific.map(r => `<li>${r}</li>`).join('')}</ul>
+        </div>`;
+
+      return `
+        <div class="output-bar">
+          <span class="output-meta">${pName} · ${v.durada} seg${v.tema ? ' · ' + v.tema : ''}</span>
+          <button class="btn-icon" onclick="copyScript()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copiar guió
+          </button>
+          <button class="btn-icon" onclick="window.print()">Imprimir</button>
+        </div>
+
+        <div class="script-card" id="script-card">
+          <div class="script-meta-bar">
+            <div class="platform-badges">${platDots[v.plataforma]}</div>
+            <div class="duration-badge">${v.durada} seg</div>
+          </div>
+          ${segHTML}
+          <div class="visual-box">
+            <div class="visual-box-title">Textos superposats recomanats</div>
+            ${visuals}
+          </div>
+        </div>
+
+        <div class="rec-section">
+          <div class="rec-title">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            Recomanacions de gravació
+          </div>
+          <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('univ',this)">Universal</button>
+            <button class="tab-btn" onclick="switchTab('plat',this)">Plataforma</button>
+          </div>
+          <div class="tab-panel active" id="tab-univ">
+            <div class="rec-grid">${recGridHTML}</div>
+          </div>
+          <div class="tab-panel" id="tab-plat">
+            ${platRecHTML}
+          </div>
+        </div>`;
+    }
+
+    function generate() {
+      const v = vals();
+      const temaEl = document.getElementById('tema');
+      const missEl = document.getElementById('missatge');
+
+      if (!v.tema) {
+        temaEl.classList.add('error');
+        temaEl.focus();
+        setTimeout(() => temaEl.classList.remove('error'), 2000);
+        return;
+      }
+      if (!v.missatge) {
+        missEl.classList.add('error');
+        missEl.focus();
+        setTimeout(() => missEl.classList.remove('error'), 2000);
+        return;
+      }
+
+      document.getElementById('empty-state').style.display = 'none';
+      const out = document.getElementById('script-output');
+      out.classList.add('visible');
+      out.innerHTML = renderOutput(v);
+      out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function switchTab(name, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById('tab-' + name).classList.add('active');
+    }
+
+    function copyScript() {
+      const card = document.getElementById('script-card');
+      if (!card) return;
+      let text = '';
+      card.querySelectorAll('.segment').forEach(seg => {
+        const tag  = seg.querySelector('.seg-tag')?.textContent ?? '';
+        const ts   = seg.querySelector('.seg-time')?.textContent ?? '';
+        const body = seg.querySelector('.seg-text')?.textContent.trim() ?? '';
+        text += `[${tag.toUpperCase()} ${ts}]\n${body}\n\n`;
+      });
+      navigator.clipboard.writeText(text.trim()).then(() => {
+        const btn = document.querySelector('.btn-icon');
+        if (!btn) return;
+        const orig = btn.innerHTML;
+        btn.innerHTML = '✓ Copiat!';
+        setTimeout(() => btn.innerHTML = orig, 2000);
+      });
+    }
+
+    // Allow Enter on text inputs to trigger generate
+    ['tema','missatge','proposta','dada'].forEach(id => {
+      document.getElementById(id).addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey && id !== 'missatge' && id !== 'proposta') {
+          e.preventDefault();
+          generate();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
